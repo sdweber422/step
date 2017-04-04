@@ -2,4 +2,4 @@ import { getRecordById } from './utilities'
 
 const getUserById = user_id => getRecordById( 'users', user_id )
 
-export { getUserById }
+export default getUserById

@@ -13,7 +13,7 @@ describe( 'user queries', () => {
           .then( user => {
             expect( user.displayName ).to.equal( 'Steve' )
             expect( user.email ).to.equal( 'steve@weber.com' )
-        })
+          })
       )
 
       it( 'should throw an error if no user exists with given id', () =>
