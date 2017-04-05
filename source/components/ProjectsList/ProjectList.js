@@ -1,12 +1,16 @@
 import React from 'react'
-import Project from '../Project/ProjectPresentation'
+import Row from '../Row/Row'
 
-const ProjectListPresentation = ({ projects }) => {
+const ProjectList = ({ projects }) => {
   let projectList
 
   if ( projects ) {
     projectList = projects.map( project =>
-      <Project key={ project.id } { ...project } />
+      <Row
+        key={ project.id }
+        iconType={ 'eye' }
+        fieldType={ 'projects' }
+        { ...project } />
     )
   } else {
     projectList = <div> Loading . . .</div>
@@ -19,4 +23,4 @@ const ProjectListPresentation = ({ projects }) => {
   )
 }
 
-export default ProjectListPresentation
+export default ProjectList

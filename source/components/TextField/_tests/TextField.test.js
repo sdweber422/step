@@ -1,9 +1,8 @@
 import React from 'react'
 import sinon from 'sinon'
-import moxios from 'moxios'
 import { shallow, mount } from 'enzyme'
-import { expect } from '../../../configuration/testSetup'
-import TextFieldContainer from './TextFieldContainer'
+import { expect } from '../../../../configuration/testSetup'
+import TextFieldContainer from '../TextFieldContainer'
 
 describe('<TextFieldContainer />', () => {
 
@@ -11,7 +10,7 @@ describe('<TextFieldContainer />', () => {
     const spy = sinon.spy(TextFieldContainer.prototype, 'toggleEditable')
     const wrapper = mount( <TextFieldContainer />)
 
-    wrapper.find('TextFieldPresentation').simulate('click')
+    wrapper.find('TextField').simulate('click')
     expect(spy.calledOnce).to.equal(true)
     spy.restore()
   })
@@ -20,8 +19,8 @@ describe('<TextFieldContainer />', () => {
     const spy = sinon.spy(TextFieldContainer.prototype, 'editInput')
     const wrapper = mount( <TextFieldContainer /> )
 
-    wrapper.find('TextFieldPresentation').simulate('click')
-    const cows = wrapper.find('TextFieldInputPresentation')
+    wrapper.find('TextField').simulate('click')
+    const cows = wrapper.find('TextFieldInput')
     cows.simulate('change')
 
     expect(spy.calledOnce).to.equal(true)
@@ -29,7 +28,7 @@ describe('<TextFieldContainer />', () => {
   })
 
   it( 'renders the child component', () =>
-    expect(shallow(<TextFieldContainer />).find('TextFieldPresentation').length).to.equal(1)
+    expect(shallow(<TextFieldContainer />).find('TextField').length).to.equal(1)
   )
 
 })

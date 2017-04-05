@@ -2,9 +2,9 @@ import React from 'react'
 import sinon from 'sinon'
 import moxios from 'moxios'
 import { shallow, mount } from 'enzyme'
-import { expect } from '../../../configuration/testSetup'
-import ProjectListContainer from './ProjectListContainer'
-import globalState from '../globalState'
+import { expect } from '../../../../configuration/testSetup'
+import ProjectListContainer from '../ProjectListContainer'
+import globalState from '../../utilities/globalState'
 
 describe( '<ProjectListContainer />', () => {
 
@@ -77,7 +77,7 @@ describe( '<ProjectListContainer />', () => {
   })
 
   it( 'renders the child component', () =>
-      expect(shallow( <ProjectListContainer /> ).find( 'ProjectListPresentation' ).length).to.equal( 1 )
+      expect(shallow( <ProjectListContainer /> ).find( 'ProjectList' ).length).to.equal( 1 )
     )
 
 })

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import TextFieldPresentation from './TextFieldPresentation'
-import TextFieldInputPresentation from './TextFieldInputPresentation'
-import globalState from '../globalState'
-import componentErrorHandler from '../componentErrorHandler'
+import TextField from './TextField'
+import TextFieldInput from './TextFieldInput'
+import globalState from '../utilities/globalState'
+import componentErrorHandler from '../utilities/componentErrorHandler'
 
 export default class TextFieldContainer extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ export default class TextFieldContainer extends Component {
     }
     this.toggleEditable = this.toggleEditable.bind( this )
     this.editInput = this.editInput.bind( this )
+    this.handleKeyPress = this.handleKeyPress.bind( this )
   }
 
   toggleEditable() {
@@ -49,14 +50,14 @@ export default class TextFieldContainer extends Component {
 
   render() {
     const { text } = this.props
-    const TextField = this.state.editing ?
-      <TextFieldInputPresentation
+    const TextFieldDisplay = this.state.editing ?
+      <TextFieldInput
         value={ this.state.inputValue }
         onChange={ this.editInput }
         onKeyUp={ this.handleKeyPress }
       /> :
-      <TextFieldPresentation text={ text } onClick={ this.toggleEditable } />
+      <TextField text={ text } onClick={ this.toggleEditable } />
 
-    return <div>{ TextField }</div>
+    return <div>{ TextFieldDisplay }</div>
   }
 }
