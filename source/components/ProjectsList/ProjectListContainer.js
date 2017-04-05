@@ -9,7 +9,7 @@ export default class ProjectListContainer extends GlobalStateComponent {
   componentDidMount() {
     axios.get( `http://localhost:1337/user/${this.state.userId}/projects` )
       .then( body => globalState.set({ projects: body.data }) )
-      .catch( error => componentErrorHandler( 'ProjectListContainer', error ) )
+      .catch( componentErrorHandler( 'ProjectListContainer' ) )
   }
 
   render() {

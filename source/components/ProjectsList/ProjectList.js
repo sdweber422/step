@@ -8,8 +8,7 @@ const ProjectList = ({ projects }) => {
     projectList = projects.map( project =>
       <Row
         key={ project.id }
-        iconType={ 'eye' }
-        fieldType={ 'projects' }
+        fieldType={ 'project' }
         { ...project } />
     )
   } else {

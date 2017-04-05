@@ -1,9 +1,10 @@
 import React from 'react'
 import Row from '../Row/Row'
 
-const Project = () =>
+const Project = () => (
   <div>
-    <Row />
+    hello
   </div>
+)
 
 export default Project

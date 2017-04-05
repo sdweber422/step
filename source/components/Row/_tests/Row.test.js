@@ -1,15 +1,21 @@
 import React from 'react'
 import { shallow } from 'enzyme'
 import { expect } from '../../../../configuration/testSetup'
-import ProjectsListRow from '../Row'
+import Row from '../Row'
 
-describe( '<ProjectsListRow />', () => {
+describe( '<Row />', () => {
 
-  it( 'renders the first child component', () =>
-    expect( shallow( <ProjectsListRow /> ).find( 'TextFieldContainer' ).length ).to.equal( 1 )
+  it( 'renders a <TextFieldContainer />', () =>
+    expect( shallow( <Row /> ).find( 'TextFieldContainer' ).length ).to.equal( 1 )
   )
 
-  it( 'renders the second child component', () =>
-    expect( shallow( <ProjectsListRow /> ).find( 'Icon' ).length ).to.equal( 1 )
+  it( 'renders an <IconList />', () =>
+    expect( shallow( <Row /> ).find( 'IconList' ).length ).to.equal( 1 )
+  )
+
+  context( 'has FieldType prop of project', () =>
+    it( 'renders an <Icon />', () =>
+      expect( shallow( <Row fieldType='project' /> ).find( 'Icon' ).length ).to.equal( 1 )
+    )
   )
 })

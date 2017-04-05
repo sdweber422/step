@@ -28,9 +28,10 @@ export default class TextFieldContainer extends Component {
 
   handleKeyPress(event) {
     const { type, id } = this.props
+    const stateTarget = `${type}s`
 
     if ( event.key === 'Enter' ) {
-      const updatedState = this.state.globalState[type].map( element => {
+      const updatedState = this.state.globalState[stateTarget].map( element => {
         if ( element.id === id ) {
           return Object.assign(element, { text: this.state.inputValue })
         }
@@ -41,10 +42,10 @@ export default class TextFieldContainer extends Component {
         text: this.state.inputValue
       })
       .then( () => {
-        globalState.set({ [type]: updatedState })
+        globalState.set({ [stateTarget]: updatedState })
         this.setState({ editing: false })
       })
-      .catch( error => componentErrorHandler('TextFieldContainer', error ) )
+      .catch( componentErrorHandler('TextFieldContainer' ) )
     }
   }
 
