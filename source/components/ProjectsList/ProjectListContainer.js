@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import componentErrorHandler from '../utilities/componentErrorHandler'
 import GlobalStateComponent from '../utilities/GlobalStateComponent'
-import ProjectList from './ProjectList'
+import RowList from '../reusable/Row/RowList'
 import globalState from '../utilities/globalState'
 
 export default class ProjectListContainer extends GlobalStateComponent {
@@ -13,6 +13,6 @@ export default class ProjectListContainer extends GlobalStateComponent {
   }
 
   render() {
-    return <ProjectList projects={ this.state.projects } />
+    return <RowList items={ this.state.projects } type='project' />
   }
 }

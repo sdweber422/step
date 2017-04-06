@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import TextField from './TextField'
 import TextFieldInput from './TextFieldInput'
-import globalState from '../utilities/globalState'
-import componentErrorHandler from '../utilities/componentErrorHandler'
+import globalState from '../../utilities/globalState'
+import componentErrorHandler from '../../utilities/componentErrorHandler'
 
 export default class TextFieldContainer extends Component {
   constructor(props) {
@@ -27,18 +27,24 @@ export default class TextFieldContainer extends Component {
   }
 
   handleKeyPress(event) {
-    const { type, id } = this.props
-    const stateTarget = `${type}s`
+    const { id } = this.props
+    let { type } = this.props
+    let stateTarget = this.state.globalState[`${type}s`]
+
+    if ( type === 'couldDo' ) {
+      stateTarget = stateTarget[this.state.globalState.currentProjectId]
+      type = 'could-do'
+    }
 
     if ( event.key === 'Enter' ) {
-      const updatedState = this.state.globalState[stateTarget].map( element => {
+      const updatedState = stateTarget.map( element => {
         if ( element.id === id ) {
           return Object.assign(element, { text: this.state.inputValue })
         }
         return element
       })
 
-      axios.post(`http://localhost:1337/project/edit/${id}`, {
+      axios.post(`http://localhost:1337/${type}/edit/${id}`, {
         text: this.state.inputValue
       })
       .then( () => {

@@ -1,14 +1,14 @@
 import React from 'react'
 import sinon from 'sinon'
 import { shallow, mount } from 'enzyme'
-import { expect } from '../../../../configuration/testSetup'
+import { expect } from '../../../../../configuration/testSetup'
 import TextFieldContainer from '../TextFieldContainer'
 
-describe.only('<TextFieldContainer />', () => {
+describe('<TextFieldContainer />', () => {
   let warnStub
 
   beforeEach( () => {
-    warnStub = sinon.stub( console, 'error' ).callsFake( () => console.log('cows') )
+    warnStub = sinon.stub( console, 'error' ).callsFake( () => null )
   })
 
   afterEach( () => {
@@ -16,7 +16,6 @@ describe.only('<TextFieldContainer />', () => {
   })
 
   it( 'calls toggleEditable on click', () => {
-    console.warn('meow')
     const spy = sinon.spy(TextFieldContainer.prototype, 'toggleEditable')
     const wrapper = mount( <TextFieldContainer />)
 

@@ -1,9 +1,11 @@
 import React from 'react'
-import Row from '../Row/Row'
+import Heading from '../reusable/Heading/Heading'
+import RowList from '../reusable/Row/RowList'
 
-const Project = () => (
-  <div>
-    hello
+const Project = ({ couldDos, project }) => (
+  <div className='project-container' >
+    <Heading type='project' text={ project.text } />
+    <RowList type='couldDo' items={ couldDos } />
   </div>
 )
 

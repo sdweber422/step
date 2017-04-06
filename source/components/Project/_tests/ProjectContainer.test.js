@@ -3,45 +3,52 @@ import sinon from 'sinon'
 import moxios from 'moxios'
 import { shallow, mount } from 'enzyme'
 import { expect } from '../../../../configuration/testSetup'
-import ProjectListContainer from '../ProjectListContainer'
+import ProjectContainer from '../ProjectContainer'
+import globalState from '../../utilities/globalState'
 
-describe( '<ProjectListContainer />', () => {
+describe( ' <ProjectContainer />', () => {
 
   it( 'renders the child component', () =>
-      expect(shallow( <ProjectListContainer /> ).find( 'RowList' ).length).to.equal( 1 )
+    expect( shallow( <ProjectContainer /> ).find( 'Project' ).length).to.equal( 1 )
   )
 
   context( 'handles data from HTTP request on componentDidMount', () => {
     let wrapper, mountSpy
-    const fakeData = [{ id: 1, text: 'cows' }]
+    const fakeData = [
+      { id: 1, text: 'amazing could do' },
+      { id: 2, text: 'another amazing could do' }
+    ]
 
     before( () => {
       moxios.install()
-      mountSpy = sinon.spy( ProjectListContainer.prototype, 'componentDidMount' )
-      wrapper = mount( <ProjectListContainer /> )
+      mountSpy = sinon.spy( ProjectContainer.prototype, 'componentDidMount' )
+      globalState.set({ currentProjectId: 1 })
+      wrapper = mount( <ProjectContainer /> )
     })
 
     after( () => {
       moxios.uninstall()
       mountSpy.restore()
+      globalState.set({ currentProjectId: null })
     })
 
     it( 'calls componentDidMount', () => {
-      expect( ProjectListContainer.prototype.componentDidMount.calledOnce ).to.equal( true )
+      expect( ProjectContainer.prototype.componentDidMount.calledOnce ).to.equal( true )
     })
 
-    it( 'sets state using data from HTTP response', done =>
+    it( 'sets state using data from HTTP response', done => {
       moxios.wait( () => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
           status: 200,
           response: fakeData
         }).then( () => {
-          expect( wrapper.state().projects ).to.eql( fakeData )
+          expect( wrapper.state().couldDos[1] ).to.equal( fakeData )
           done()
-        }).catch(done)
+        }).catch( done )
       })
-    )
+    })
+
   })
 
   context( 'handles error returned from HTTP request on componentDidMount', () => {
@@ -50,7 +57,7 @@ describe( '<ProjectListContainer />', () => {
     before( () => {
       moxios.install()
       errorStub = sinon.stub( console, 'error' ).callsFake( () => null )
-      mount( <ProjectListContainer /> )
+      mount( <ProjectContainer /> )
     })
 
     after( () => {
@@ -58,10 +65,10 @@ describe( '<ProjectListContainer />', () => {
       moxios.uninstall()
     })
 
-    it( 'it catches and responds with an error', done =>
+    it( 'catches and responds with an error', done =>
       moxios.wait( () => {
         const request = moxios.requests.mostRecent()
-        request.respondWith({
+        return request.respondWith({
           status: 400,
           response: 'fakeError'
         }).then( () => {
