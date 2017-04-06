@@ -4,9 +4,19 @@ import { shallow, mount } from 'enzyme'
 import { expect } from '../../../../configuration/testSetup'
 import TextFieldContainer from '../TextFieldContainer'
 
-describe('<TextFieldContainer />', () => {
+describe.only('<TextFieldContainer />', () => {
+  let warnStub
+
+  beforeEach( () => {
+    warnStub = sinon.stub( console, 'error' ).callsFake( () => console.log('cows') )
+  })
+
+  afterEach( () => {
+    warnStub.restore()
+  })
 
   it( 'calls toggleEditable on click', () => {
+    console.warn('meow')
     const spy = sinon.spy(TextFieldContainer.prototype, 'toggleEditable')
     const wrapper = mount( <TextFieldContainer />)
 
@@ -15,14 +25,14 @@ describe('<TextFieldContainer />', () => {
     spy.restore()
   })
 
+
   it( 'calls editInput function', () => {
     const spy = sinon.spy(TextFieldContainer.prototype, 'editInput')
     const wrapper = mount( <TextFieldContainer /> )
 
     wrapper.find('TextField').simulate('click')
-    const cows = wrapper.find('TextFieldInput')
-    cows.simulate('change')
-
+    const textChange = wrapper.find('TextFieldInput')
+    textChange.simulate('change')
     expect(spy.calledOnce).to.equal(true)
     spy.restore()
   })

@@ -11,4 +11,6 @@ export default class GlobalStateComponent extends Component {
   componentWillUnmount() { globalState.unsubscribe(this.updateState) }
 
   updateState = newState => this.setState( newState )
+
+  render() { return null }
 }

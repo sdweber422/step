@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios'
 import globalState from '../utilities/globalState'
-import componentErrorHandler from '../utilities/componentErrorHandler'
 import GlobalStateComponent from '../utilities/GlobalStateComponent'
 import Project from './Project'
+import componentErrorHandler from '../utilities/componentErrorHandler'
 
 export default class ProjectContainer extends GlobalStateComponent {
   constructor() {

@@ -6,8 +6,9 @@ import { expect } from '../../../../configuration/testSetup'
 import ProjectContainer from '../ProjectContainer'
 import globalState from '../../utilities/globalState'
 
-describe.only( ' <Project />', () => {
-  context( 'componentDidMount', () => {
+describe( ' <Project />', () => {
+
+  context( 'handles data from HTTP request on componentDidMount', () => {
     let wrapper, mountSpy
     const fakeData = [
       { id: 1, text: 'amazing could do' },
@@ -31,7 +32,7 @@ describe.only( ' <Project />', () => {
       expect( ProjectContainer.prototype.componentDidMount.calledOnce ).to.equal( true )
     })
 
-    it( 'makes http request and sets state to response', done => {
+    it( 'sets state using data from HTTP response', done => {
       moxios.wait( () => {
         const request = moxios.requests.mostRecent()
         request.respondWith({
@@ -43,6 +44,35 @@ describe.only( ' <Project />', () => {
         }).catch( done )
       })
     })
+
+  })
+
+  context( 'handles error returned from HTTP request on componentDidMount', () => {
+    let errorStub
+
+    before( () => {
+      moxios.install()
+      errorStub = sinon.stub( console, 'error' ).callsFake( () => null )
+      mount( <ProjectContainer /> )
+    })
+
+    after( () => {
+      errorStub.restore()
+      moxios.uninstall()
+    })
+
+    it( 'catches and responds with an error', done =>
+      moxios.wait( () => {
+        const request = moxios.requests.mostRecent()
+        return request.respondWith({
+          status: 400,
+          response: 'fakeError'
+        }).then( () => {
+          expect( errorStub.calledTwice ).to.equal( true )
+          done()
+        }).catch( done )
+      })
+    )
 
   })
 
